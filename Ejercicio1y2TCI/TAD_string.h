@@ -13,5 +13,6 @@ str load2(const char*);
 void show(str);
 str conCat(str, str);
 str beforeToken(str, char);
+str afterToken(str, char);
 
 #endif

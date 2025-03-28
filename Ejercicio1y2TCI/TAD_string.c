@@ -39,6 +39,17 @@ str load(){
 	}
 	return lista;
 }
+str load2(const char* cad){
+	int i=0;
+	str nodo, lista;
+	lista=create();
+	while(cad[i]!='\0'){
+		nodo=crea_nodo(cad[i]);
+		agrega_por_cola(&lista, nodo);
+		i++;
+	}
+	return lista;
+}
 void show(str lista){
 	if(lista!=NULL){
 		while(lista!=NULL){
@@ -51,38 +62,43 @@ void show(str lista){
 str beforeToken(str cad, char bus){
 	str nueCad, nodo;
 	nueCad=create();
-	if(cad!=NULL){
-		while(cad!=NULL && cad->dato!=bus){
-			nodo=crea_nodo(cad->dato);
-			agrega_por_cola(&nueCad, nodo);
-			cad=cad->sig;
-		}
+	while(cad!=NULL && cad->dato!=bus){
+		nodo=crea_nodo(cad->dato);
+		agrega_por_cola(&nueCad, nodo);
+		cad=cad->sig;
 	}
-	else printf("  cadena vacia, no se puede aplicar 'before token'");
 	return nueCad;
 }
-str conCat(str a, str b){
-	str nueCad, nodo, aux;
+str afterToken(str cad, char bus){
+	str nueCad, aux;
 	nueCad=create();
-	if(a==NULL)
-		nueCad=b;
-	else if(b==NULL)
-		nueCad=a;
-	else if(a==NULL && b==NULL)
-		nueCad=NULL;
-	else{
-		while(a!=NULL){
-			nodo=crea_nodo(a->dato);
-			agrega_por_cola(&nueCad, nodo);
-			a=a->sig;
-		}
-		aux=nueCad;
-		while(nueCad->sig!=NULL)
-			aux=aux->sig;
-		aux->sig=b;
+	aux=cad;
+	while(aux->dato!=bus && aux!=NULL)
+		aux=aux->sig;
+	if(aux!=NULL){
+		aux=aux->sig;
+		nueCad=aux;
 	}
 	return nueCad;
 }
+	str conCat(str a, str b){
+		str nueCad, nodo, aux;
+		if(a==NULL) return b;
+		else if(b==NULL) return a;
+		else{
+			nueCad=create();
+			while(a!=NULL){
+				nodo=crea_nodo(a->dato);
+				agrega_por_cola(&nueCad, nodo);
+				a=a->sig;
+			}
+			while(b!=NULL){
+				nodo=crea_nodo(b->dato);
+				agrega_por_cola(&nueCad, nodo);
+			}
+			return nueCad;
+		}
+	}
 	
 	
 	
