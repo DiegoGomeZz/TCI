@@ -60,45 +60,51 @@ void show(str lista){
 	else printf("\n cadena vacia");
 }
 str beforeToken(str cad, char bus){
-	str nueCad, nodo;
+	str nueCad, nodo, aux;
 	nueCad=create();
-	while(cad!=NULL && cad->dato!=bus){
-		nodo=crea_nodo(cad->dato);
+	aux=cad;
+	while(aux!=NULL && aux->dato!=bus){
+		nodo=crea_nodo(aux->dato);
 		agrega_por_cola(&nueCad, nodo);
-		cad=cad->sig;
+		aux=aux->sig;
 	}
 	return nueCad;
 }
 str afterToken(str cad, char bus){
-	str nueCad, aux;
+	str nueCad, aux, nodo;
 	nueCad=create();
 	aux=cad;
-	while(aux->dato!=bus && aux!=NULL)
+	while(aux->dato!=bus && aux->sig!=NULL)
 		aux=aux->sig;
-	if(aux!=NULL){
+	aux=aux->sig;
+	while(aux!=NULL){
+		nodo=crea_nodo(aux->dato);
+		agrega_por_cola(&nueCad, nodo);
 		aux=aux->sig;
-		nueCad=aux;
 	}
 	return nueCad;
 }
-	str conCat(str a, str b){
-		str nueCad, nodo, aux;
-		if(a==NULL) return b;
-		else if(b==NULL) return a;
-		else{
-			nueCad=create();
-			while(a!=NULL){
-				nodo=crea_nodo(a->dato);
-				agrega_por_cola(&nueCad, nodo);
-				a=a->sig;
-			}
-			while(b!=NULL){
-				nodo=crea_nodo(b->dato);
-				agrega_por_cola(&nueCad, nodo);
-			}
-			return nueCad;
+str conCat(str a, str b){
+	str nueCad, nodo, aux;
+	nueCad=create();
+	if(a==NULL) nueCad = b;
+	else if(b==NULL) nueCad = a;
+	else{
+		aux=a;
+		while(aux!=NULL){
+			nodo=crea_nodo(aux->dato);
+			agrega_por_cola(&nueCad, nodo);
+			aux=aux->sig;
+		}
+		aux=b;
+		while(aux!=NULL){
+			nodo=crea_nodo(aux->dato);
+			agrega_por_cola(&nueCad, nodo);
+			aux=aux->sig;
 		}
 	}
+	return nueCad;
+}
 	
 	
 	

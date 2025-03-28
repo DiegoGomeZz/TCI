@@ -26,10 +26,10 @@ int main(){
 	afterTokenCad = afterToken(cadena1, c);
 	show(afterTokenCad);
 	
-	
-	printf("\n\nconcatena ambas cadenas: ");
+	printf("\n\n cadenas 1 y 2 concatenadas: ");
 	conCatCad = conCat(cadena1, cadena2);
 	show(conCatCad);
+
 	
 	return 0;
 }
