@@ -5,14 +5,13 @@ int main(){
 	
 	set conj, conj2, conj3;
 	
-	str cad1, cad2, cad3, cad4, cad5;
+	str cad1, cad2, cad3, cad5;
 	
 	char c;
 	
 	cad1 = load2("hola");
 	cad2 = load2("soy");
 	cad3 = load2("diego");
-	cad4 = load2("hola");
 	cad5 = load2("a,b,cd,efg");
 	
 	conj=createSet();
@@ -36,11 +35,6 @@ int main(){
 	printf("\n\n CONJUNTO 1: ");
 	showSet(conj);
 	
-	printf("\n\nagrego cad4 ");
-	agregar(&conj, cad4);
-	printf("\n\n CONJUNTO 1: ");
-	showSet(conj);
-	
 	printf("\n\n\n\ncad5: ");
 	show(cad5);
 	printf("\n\n ingrese un caracter para str to set: ");
@@ -58,6 +52,9 @@ int main(){
 	printf("\n\n\n UNION DE CONJUNTO 1 Y 2: ");
 	conj3 = unionSets(conj, conj2);
 	showSet(conj3);
+	
+	if(contenido(conj, conj3)==1)
+		printf("\n\n el conjunto1 esta contenido en el conjunto 3");
 	
 	printf("\n\n\n INTERSECCION DE CONJUNTO 1 Y 2: ");
 	conj3 = interseccion(conj, conj2);

@@ -16,5 +16,6 @@ set strToSetToken(str, char);
 set interseccion(set, set);
 set unionSets(set, set);
 set diferencia(set, set);
+int contenido(set, set);
 
 #endif

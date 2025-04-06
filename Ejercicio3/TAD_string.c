@@ -57,7 +57,7 @@ void show(str lista){
 			lista=lista->sig;
 		}
 	}
-	else printf("\n cadena vacia");
+	else printf(" cadena vacia ");
 }
 str beforeToken(str cad, char bus){
 	str nueCad, nodo, aux;

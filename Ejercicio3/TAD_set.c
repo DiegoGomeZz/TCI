@@ -42,7 +42,7 @@ void showSet(set conj){
 		while(conj->sig!=NULL){
 			printf("'");
 			show(conj->dato);
-			printf("', ");
+			printf("' ");
 			conj=conj->sig;
 		}
 		printf("'");
@@ -116,6 +116,26 @@ set strToSetToken(str cad, char token){
 	agregar(&conj, cadenita);
 	return conj;
 }
+int contenido(set a, set b){
+	int band=1;
+	while(a!=NULL && band==1){
+		if(isInSet(b,a->dato)==1)
+			a=a->sig;
+		else band=0;
+	}
+	return band;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
