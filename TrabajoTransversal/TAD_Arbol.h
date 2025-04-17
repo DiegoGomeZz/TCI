@@ -23,8 +23,8 @@ typedef dataType *TDA;
 
 TDA free_load();
 TDA crearNodoChar();
-TDA crearNodoList(list*);
-TDA crearNodoSet (set*);
+TDA crearNodoList();
+TDA crearNodoSet ();
 void show_tree(TDA);
 #endif
 
