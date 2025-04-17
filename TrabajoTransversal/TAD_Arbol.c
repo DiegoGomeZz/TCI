@@ -6,6 +6,47 @@ TDA start_tree(){
 	return NULL;
 	
 }
+
+TDA free_load_list(TDA *A1){
+	int op;
+	TDA aux=*A1;
+	TDA nuevo=start_tree();
+	
+		printf("\n Ingrese el tipo de dato a almacenar: ");
+		printf("\n 1_ Tipo de Dato: Strng.");
+		printf("\n 2_Tipo de Dato: List.");
+		printf("\n 3_ Tipo de Dato: Set.");
+		printf("\n Su eleccion: ");
+		scanf("%d", &op);
+		switch(op){
+		case 1: {
+			while(aux->sig!=NULL){
+				aux=aux->sig;
+			}
+			nuevo=crearNodoChar();
+			aux->sig=nuevo;
+			break;
+		}
+		case 2: {
+			while (aux->sig!=NULL){
+				aux=aux->sig;
+			}
+			nuevo=crearNodoList();
+			nuevo->sig=free_load_list(&nuevo);
+			break;
+		}
+		
+		case 3:{
+			while(aux->sig!=NULL){
+				aux=aux->sig;
+			}
+			aux->sig=crearNodoSet();
+			break;
+		}
+	}
+	return  aux;
+}
+
 TDA free_load(int ce, TDA *A1){
 	int op;
 	TDA aux;
@@ -26,34 +67,46 @@ TDA free_load(int ce, TDA *A1){
 		scanf("%d", &op);
 		switch(op){
 			case 1: {
-				while(aux->sig!=NULL){
+				if(aux==NULL){
+					aux->sig=crearNodoChar();
 					aux=aux->sig;
+					ce--;
+					break;
 				}
-				aux->sig=crearNodoChar();
-				ce--;
-				free_load(ce,&aux);
-				break;
+				else{
+					while(aux->sig!=NULL){
+						aux=aux->sig;
+					}
+					aux->sig=crearNodoChar();
+					aux=aux->sig;
+					ce--;
+					break;
+				}
 			}
 			case 2: {
-				list L1;
-				L1=create_list();
 				while (aux->sig!=NULL){
 					aux=aux->sig;
 				}
-				aux->sig=crearNodoList(L1);
+				int n=0;
+				aux->sig=crearNodoList();
 				ce--;
-				free_load(ce,&aux);
+				aux=aux->sig;
+				printf("ingrese cantidad de elementos a almacenar en la lista: ");
+				scanf("%d", &n);
+				while(n>0){
+				aux->dato=free_load_list(&aux);
+				n--;
+				}
 				break;
 			}
 			case 3:{
 				while(aux->sig!=NULL){
 					aux=aux->sig;
 				}
-				set S1;
-				S1=create_set();
-				aux->sig=crearNodoSet(S1);
+				aux->sig=crearNodoSet();
 				ce--;
-				free_load(ce,&aux);
+				aux=aux->sig;
+				aux->dato=free_load_list(&A1);
 				break;
 			}
 		}
@@ -71,19 +124,19 @@ TDA crearNodoChar(){
 	return nuevo;
 }
 
-TDA crearNodoList (list* L1){
+TDA crearNodoList (){
 	TDA nuevo;
 	nuevo=(struct dataType *) malloc(sizeof(struct dataType));
-	nuevo->dato=L1;
+	nuevo->dato=NULL;
 	nuevo->nodeType=LIS;
 	nuevo->sig=NULL;
 	return nuevo;
 }
 	
-TDA crearNodoSet (set* S1){
+TDA crearNodoSet (){
 	TDA nuevo;
 	nuevo=(struct dataType*) malloc(sizeof(struct dataType));
-	nuevo->dato=S1;
+	nuevo->dato=NULL;
 	nuevo->nodeType=SET;
 	nuevo->sig=NULL;
 	return nuevo;
@@ -91,24 +144,25 @@ TDA crearNodoSet (set* S1){
 
 void show_tree(TDA arbol){
 	TDA aux=arbol;
-	printf("{ ");
 	while(aux->sig!=NULL){
 		switch(aux->nodeType){
 			case 1: {
-/*				printf("\n Cadena dentro del arbol: ");*/
-				print(aux->dataStr);
+				print(aux->dato);
 				printf(", ");
 				break;
 			}
 			case 2: {
-/*				printf("\n Lista dentro del arbol: ");*/
-				show(aux->dataStr);
+				TDA auxl=aux;
+				printf("[");
+				show_tree(auxl->dato);
 				printf(", ");
+				printf("]");
 				break;
 			}
 			case 3:{
+				TDA auxs=aux;
 /*				printf("\n Conjunto dentro del arbol: ");*/
-				show_set(aux->dataStr);
+				show_tree(auxs->dato);
 				printf(", ");
 				break;
 			}
@@ -117,22 +171,23 @@ void show_tree(TDA arbol){
 	}
 	switch(aux->nodeType){
 		case 1: {
-/*			printf("\n Cadena dentro del arbol: ");*/
-			print(aux->dataStr);
+			print(aux->dato);
 			break;
 		}
 		case 2: {
+			TDA auxl=aux;
 /*			printf("\n Lista dentro del arbol: ");*/
-			show(aux->dataStr);
+			show_tree(auxl->dato);
 			break;
 		}
 		case 3:{
+			TDA auxs=aux;
 /*			printf("\n Conjunto dentro del arbol");*/
-			show_set(aux->dataStr);
+			show_tree(auxs->dato);
 			break;
 		}
 	}
-	printf(" }\n");
+/*	printf(" }\n");*/
 }
 /*arbol(nodo(dato,dataStr)->nodo(dato,dataStr)->nodo(dato,dataStr)->NULL)->arbol(nodo(dato,dataStr)->NULL)*/
 /*[a,b,c{aa,bb,cc},d,e]*/
